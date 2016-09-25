@@ -1,0 +1,178 @@
+﻿<!DOCTYPE HTML>
+<!--
+	Autonomy by TEMPLATED
+    templated.co @templatedco
+    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>認識清水-美食地圖</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-panels.min.js"></script>
+		<script src="js/init.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyA6gcpi9-EnxyDjXeWzkU9DHpyB5iyEUvY"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel-noscript.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-desktop.css" />
+		</noscript>
+
+	</head>
+	<body>
+
+		<!-- Header -->
+		<div id="header">
+			<!--<div class="container">-->
+				
+				<!-- Logo -->
+				
+				
+				<!-- Nav -->
+				
+
+			</div>
+		</div>
+		<!-- Header -->
+
+		<div id="banner">
+        <div id="logo">
+            <h1><a href="#">&nbsp&nbsp&nbsp美食地圖</a></h1>
+        </div>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li class="active"><a href="twocolumn1.html">美食地圖</a></li>
+                    <li><a href="twocolumn2.html">觀光景點</a></li>
+                    <li><a href="onecolumn.html">資訊連結</a></li>
+                </ul>
+</nav></div>
+
+		<div id="featured">
+			<div class="container">
+                <div class="row">
+                    <div class="3u">
+                        <section>
+                            <header>
+                                <!--<h2>Donec dictum metus</h2>-->
+                            </header>
+                        </section>
+                        <section>
+                            <!--<a href="#" class="image full"><img src="images/pics04.jpg" alt=""></a>-->
+                            <header>
+                                <h2>代表美食-筒仔米糕</h2>
+                            </header>
+                            <a href="#" class="image full imgTransform"><img src="images/r5DbWPQ.jpg" alt=""></a>
+                            <p>清水最有名的，就是筒仔米糕了，清水街市上至少有10幾家米糕店。據說是因為早期清水的良田收成大量的稻米，再加上鄰近海邊，所以就用稻米作出米糕，並添加海味的蚵仔和新鮮的豬肉，現在更是發展出多樣口味。</p>
+                        </section>
+            
+                    </div>
+
+                    <div class="9u">
+                        
+                            <header>
+                                <h2>美食地圖</h2>
+                            </header>
+                           
+
+                        <div id="map" style="width: 800px; height: 600px;"></div>
+
+    <script type="text/javascript">
+        
+          var PathData = [
+        ["<p>王塔米糕</p><p>營業時間:09:30–20:30</p>", 24.2714438240221, 120.57693131268024],
+        ["<p>阿財米糕</p>營業時間:10:00–20:00</p>", 24.27200742383067, 120.5751771479845],
+        ["<p>正牌米糕</p>營業時間:10:30–19:00</p>", 24.269223020835152, 120.57853326201439],
+        ["<p>樹下阿婆粉圓</p>營業時間:08:00–17:00</p>", 24.271221928834592, 120.57904221117496],
+        ["<p>阿忠米糕</p>營業時間:07:00–15:00</p>", 24.26921324016825, 120.57612732052803],
+        ["<p>板凳肉圓</p>營業時間:13:30–03:30</p>", 24.267307829639677, 120.57450592517853]
+        ];
+
+                        function initialize() {
+
+	                        // - set map
+                            var map =
+                                new google.maps.Map(document.getElementById('map'));
+
+	                        // - set info window -- will be used in marker click event
+                            var infowindow = new google.maps.InfoWindow();
+
+	                        // - set middle path data to center
+                            var center =
+                                new google.maps.LatLng(24.269745674127815, 120.57462930679321);
+                            zoom: 16;
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+
+	                        // - set markers
+
+                            var marker, i;
+
+                            for (i = 0; i < PathData.length; i++) {
+                                marker = new google.maps.Marker({
+                                    position: new google.maps.LatLng(PathData[i][1], PathData[i][2]),
+                                    map: map
+                                });
+
+                                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                                    return function () {
+                                        map.setZoom(17);
+                                        map.setCenter(marker.getPosition());
+                                        infowindow.setContent(PathData[i][0]);
+                                        infowindow.open(map, marker);
+                                    }
+                                })(marker, i));
+                            };
+
+	                        // - set polygon
+
+                            var path = [];
+                            var bounds = new google.maps.LatLngBounds();
+                            bounds.extend(center);
+                            for (var i in PathData)
+                            {
+                                var p = PathData[i];
+                                var latlng = new google.maps.LatLng(p[1], p[2]);
+                                path.push(latlng);
+                                bounds.extend(latlng);
+                            }
+                            var poly = new google.maps.Polygon({
+                                //paths: path,
+                                //strokeColor: '#FF0000',
+                                //strokeOpacity: 0.8,
+                                //strokeWeight: 3,
+                                //fillColor: '#FF0000',
+                                //fillOpacity: 0.1
+                            });
+                            poly.setMap(map);
+
+
+                            map.fitBounds(bounds);
+                        }
+
+                        google.maps.event.addDomListener(window, 'load', initialize);
+
+                            </script>
+                                
+
+
+                    </div>
+
+
+                    
+                </div>
+				</div>
+			</div>
+		
+
+        <div id="copyright">
+            <div class="container">
+                Design:BoYang <br><br>E-mail:jack000159@gmail.com
+            </div>
+        </div>
+
+	</body>
+</html>
